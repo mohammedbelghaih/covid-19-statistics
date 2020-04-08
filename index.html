@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <title>Covid-19 Statistics</title>
+</head>
+<body>
+    <style>
+        body{
+            background-image: radial-gradient(darkgray, gray, black)
+        }
+        table, #demo,th,td{
+             border:1px solid red
+         }
+         th{
+             background-color: teal;
+             color: white;
+         }
+         
+         
+        
+     </style>
+ </head>
+ <body>
+     
+        <div>  
+            <center>
+                <table >
+                    <theader >
+                        <tr>
+                        <th  >Region</th>
+                        <th >Province</th>
+                        <th colspan="3"> Long</th>
+                        <th >Lat</th>   
+                        </tr>
+                    </theader>
+                    <tbody id="demo">
+                
+                    </tbody>
+                </table>
+            </center>
+        </div>
+         
+
+
+
+    <script>
+      function importdt(){
+            d3.json("convertcsv.json").then(function(json){
+                let g=d3.select("#demo")
+                    .selectAll("tr")
+                    .data(json)
+                    .enter()
+                    .append("tr")
+                    .html(function(d){
+                        let x="<td>"+JSON.stringify(d.Country.Region)+"</td>"+"<td>"+JSON.stringify(d.Province.State)+"</td>"+"<td  colspan=3>"+JSON.stringify(d.Lat)+"</td>"+"<td colspan=3>"+JSON.stringify(d.Long)+"</td>"
+    
+                            return x;
+                     })
+            })
+        }
+
+
+        importdt()
+
+
+    </script>
+</body>
+</html>
