@@ -34,6 +34,7 @@
                         <th >Province</th>
                         <th colspan="3"> Long</th>
                         <th >Lat</th>   
+                        <th>cases</th>
                         </tr>
                     </theader>
                     <tbody id="demo">
@@ -55,7 +56,7 @@
                     .enter()
                     .append("tr")
                     .html(function(d){
-                        let x="<td>"+JSON.stringify(d.Country.Region)+"</td>"+"<td>"+JSON.stringify(d.Province.State)+"</td>"+"<td  colspan=3>"+JSON.stringify(d.Lat)+"</td>"+"<td colspan=3>"+JSON.stringify(d.Long)+"</td>"
+                        let x="<td>"+JSON.stringify(d.Country.Region)+"</td>"+"<td>"+JSON.stringify(d.Province.State)+"</td>"+"<td  colspan=3>"+JSON.stringify(d.Lat)+"</td>"+"<td >"+JSON.stringify(d.Long)+"</td>"+"<td>"+JSON.stringify(d.Apr)+"</td>"
     
                             return x;
                      })
