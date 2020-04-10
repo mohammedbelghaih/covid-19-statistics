@@ -8,7 +8,7 @@
         div.tooltip {	
             position: absolute;			
             text-align: center;	
-            width: 100px;					
+            width: 150px;					
             height: 32px;					
             padding: 2px;				
             font: 14px sans-serif;		
@@ -27,84 +27,84 @@
     <script src="https://d3js.org/d3.v4.js"></script>
 </head>
 <body>
-  <center>
-    <svg id="my_dataviz" width="1200" height="500"></svg>
-</center>
+    <center>
+        <svg id="my_dataviz" width="1200" height="500"></svg>
+    </center>
 
    </body>
- <script>   
- // The svg
-var svg = d3.select("svg"),
-    width = +svg.attr("width"),
-    height = +svg.attr("height");
+        <script>   
+        // The svg
+            var svg = d3.select("svg"),
+            width = +svg.attr("width"),
+            height = +svg.attr("height");
 
-// Map and projection
-var projection = d3.geoMercator()
-    .scale(200)    // This is like the zoom
+        // Map and projection
+            var projection = d3.geoMercator()
+            .scale(200)    // This is like the zoom
     
 
     // Load external data and boot
-    d3.queue()
-    .defer(d3.json, "convertcsv.json")
-    .defer(d3.json, "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson")
-    .await(function(error, data, d1) {
-    
+            d3.queue()
+                .defer(d3.json, "convertcsv.json")
+                .defer(d3.json, "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson")
+                .await(function(error, data, d1) {
+                
 
     // Draw the map
-    svg.append("g")
-        .selectAll("path")
-        .data(d1.features)
-        .enter()
-        .append("path")
-          .attr("fill", "gray")
-          .attr("d", d3.geoPath()
-              .projection(projection)
-          )
-        .style("stroke", "white")
-        .style("opacity", 1)
-          
+            svg.append("g")
+                .selectAll("path")
+                .data(d1.features)
+                .enter()
+                .append("path")
+                .attr("fill", "gray")
+                .attr("d", d3.geoPath()
+                    .projection(projection)
+                )
+                .style("stroke", "white")
+                .style("opacity", 1)
+                
 
 
 
 
     // Define the div for the tooltip
-    var div = d3.select("body").append("div")	
-        .attr("class", "tooltip")				
-        .style("opacity", 0);
+        var div = d3.select("body").append("div")	
+            .attr("class", "tooltip")				
+            .style("opacity", 0);
     // Add circles:
-    svg
-      .selectAll("myCircles")
-      .data(data)
-      .enter()
-      .append("circle")
-        .attr("cx", function(d){ return projection([d.Long, d.Lat])[0] })
-        .attr("cy", function(d){ return projection([d.Long, d.Lat])[1] })
-        .attr("r", function(d){
-            if(d.Apr<500){
-                return 3
-            }else if(d.Apr>=500 && d.Apr<4000){
-             return 5
-            }else if(d.Apr>=4000 && d.Apr<10000){
-                return 8
-            }else if(d.Apr>=10000){
-                return 14
-            }
-             })
-        .style("fill", "white")
-        .attr("stroke", "red")
-        .attr("stroke-width", 2)
-        .attr("fill-opacity", 1)
-        .on("click", function(d) {		
-            div.transition()		
-                .duration(200)		
-                .style("opacity", .9);		
-            div	.html(JSON.stringify(d.Country.Region) + "</br>" + JSON.stringify(d.Apr))	
-                .style("left", (d3.event.pageX) + "px")		
-                .style("top", (d3.event.pageY - 0) + "px");	
-            })	
-    
-        
-})
+        svg
+        .selectAll("myCircles")
+        .data(data)
+        .enter()
+        .append("circle")
+            .attr("cx", function(d){ return projection([d.Long, d.Lat])[0] })
+            .attr("cy", function(d){ return projection([d.Long, d.Lat])[1] })
+            .attr("r", function(d){
+                if(d.Apr<500){
+                    return 3
+                }else if(d.Apr>=500 && d.Apr<4000){
+                return 5
+                }else if(d.Apr>=4000 && d.Apr<10000){
+                    return 8
+                }else if(d.Apr>=10000 && d.Apr<30000){
+                    return 14
+                }else if(d.Apr>=30000){
+                    return 18
+                }
+                })
+            .style("fill", "white")
+            .attr("stroke", "red")
+            .attr("stroke-width", 2)
+            .attr("fill-opacity", 1)
+            .on("click", function(d) {		
+                div.transition()		
+                    .duration(200)		
+                    .style("opacity", .9);		
+                div	.html(JSON.stringify(d.Country.Region) + JSON.stringify(d.Province.State) + "</br>" + JSON.stringify(d.Apr))	
+                    .style("left", (d3.event.pageX) + "px")		
+                    .style("top", (d3.event.pageY - 0) + "px");	
+                })	
+            })
 
         </script>
 
